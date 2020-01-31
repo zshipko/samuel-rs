@@ -132,6 +132,7 @@ pub enum Id {
         sp_name_qualifier: Option<String>,
         format: Option<String>,
         sp_provided_id: Option<String>,
+        name: Option<String>,
     },
     EncryptedId {
         encrypted_data: String,
@@ -153,6 +154,7 @@ impl<'a, 'd: 'a> TryFrom<Node<'a, 'd>> for Id {
                 sp_name_qualifier: n.attribute("SPNameQualifier").map(|a| a.into()),
                 format: n.attribute("Format").map(|a| a.into()),
                 sp_provided_id: n.attribute("SPProvidedID").map(|a| a.into()),
+                name: n.text().map(String::from),
             }),
             "EncryptedID" => Ok(Id::EncryptedId {
                 encrypted_data: try_child(n, "EncryptedData")?.text().unwrap().into(),
