@@ -15,10 +15,9 @@ pub(crate) fn try_child<'a, 'd: 'a>(
         .find(|c| c.tag_name().name() == element_name)
         .ok_or_else(|| {
             format_err!(
-                "{} element not found within {} at {}",
+                "{} element not found within {}",
                 element_name,
                 node.tag_name().name(),
-                node.node_pos()
             )
         })
 }
@@ -44,10 +43,9 @@ pub(crate) fn try_attribute<'a, 'd: 'a>(
         .map(|a| a.into())
         .ok_or_else(|| {
             format_err!(
-                "{} attribute not found within {} at {}",
+                "{} attribute not found within {}",
                 attribute_name,
                 node.tag_name().name(),
-                node.node_pos()
             )
         })
 }

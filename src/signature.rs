@@ -250,7 +250,7 @@ where
             Some(n) if n.tag_name().name() == "MgmtData" => Ok(KeyInfos::MgmtDatas(
                 iterator.map(|n| n.text().unwrap().into()).collect(),
             )),
-            Some(n) => bail!("Unsupported KeyInfo {:?} at {}", n, n.node_pos()),
+            Some(n) => bail!("Unsupported KeyInfo {:?}", n),
         }
     }
 }

@@ -34,7 +34,7 @@ where
                     .map(|n| n.try_into())
                     .collect::<Result<Vec<_>, _>>()?,
             )),
-            Some(n) => bail!("Unsupported Assertion {:?} at {}", n, n.node_pos()),
+            Some(n) => bail!("Unsupported Assertion {:?}", n),
         }
     }
 }
@@ -104,12 +104,7 @@ impl<'a, 'd: 'a> TryFrom<Node<'a, 'd>> for Subject {
                 .children()
                 .find(|c| c.tag_name().name().ends_with("ID"))
                 .ok_or_else(|| {
-                    format_err!(
-                        "{} element not found within {} at {}",
-                        "ID",
-                        n.tag_name().name(),
-                        n.node_pos()
-                    )
+                    format_err!("{} element not found within {}", "ID", n.tag_name().name(),)
                 })?
                 .try_into()?,
             subject_confirmation: n
@@ -164,7 +159,7 @@ impl<'a, 'd: 'a> TryFrom<Node<'a, 'd>> for Id {
                     .map(|c| c.text().unwrap().into())
                     .collect::<Vec<_>>(),
             }),
-            _ => bail!("Unsupported Assertion {:?} at {}", n, n.node_pos()),
+            _ => bail!("Unsupported Assertion {:?}", n),
         }
     }
 }
@@ -266,7 +261,7 @@ where
                         .collect::<Result<Vec<_>, _>>()?,
                 ))
             }
-            Some(n) => bail!("Unsupported Restriction {:?} at {}", n, n.node_pos()),
+            Some(n) => bail!("Unsupported Restriction {:?}", n),
         }
     }
 }
@@ -460,10 +455,9 @@ impl<'a, 'd: 'a> TryFrom<Node<'a, 'd>> for AuthzDecisionStatement {
                 .attribute("Decision")
                 .ok_or_else(|| {
                     format_err!(
-                        "{} attribute not found within {} at {}",
+                        "{} attribute not found within {}",
                         "Decision",
                         n.tag_name().name(),
-                        n.node_pos()
                     )
                 })?
                 .parse()?,
@@ -534,7 +528,7 @@ where
                         .collect::<Vec<_>>(),
                 ))
             }
-            Some(n) => bail!("Unsupported Evidence {:?} at {}", n, n.node_pos()),
+            Some(n) => bail!("Unsupported Evidence {:?}", n),
         }
     }
 }
@@ -591,7 +585,7 @@ where
                         .collect::<Result<Vec<_>, _>>()?,
                 ))
             }
-            Some(n) => bail!("Unsupported Attribute {:?} at {}", n, n.node_pos()),
+            Some(n) => bail!("Unsupported Attribute {:?}", n),
         }
     }
 }
